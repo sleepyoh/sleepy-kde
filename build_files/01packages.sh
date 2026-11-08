@@ -46,7 +46,11 @@ dnf5 install -y \
     vlc \
     kolourpaint \
     krita \
-    kdenlive
+    kdenlive \
+    plasma-oxygen \
+    oxygen-icon-theme \
+    oxygen-cursor-themes \
+    oxygen-sounds
 
 # Remove default packages I don't use
 dnf5 remove -y \
