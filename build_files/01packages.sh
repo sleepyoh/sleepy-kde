@@ -70,7 +70,8 @@ dnf5 remove -y \
     plasma-systemmonitor \
     plasma-discover \
     kjournald \
-    kjournald-libs
+    kjournald-libs \
+    kf6-baloo-file
 
 # Remove printing and scanning (no printer/scanner on this PC)
 # If you delete this block, uncomment "systemctl disable cups.service" in 06systemctl.sh
