@@ -1,0 +1,68 @@
+# divine-desktop (sleepy-kde)
+
+Custom Fedora Kinoite (KDE) bootc image for my personal PC. Not meant for anyone else, so
+choices can be specific to this one machine (bare metal, AMD GPU, no printer, no bluetooth).
+
+Published as `ghcr.io/sleepyoh/sleepy-kde:latest`.
+
+## Goals
+
+- **One update mechanism.** The image is the only way anything updates. Apps must not have
+  their own updater or a separate update channel.
+- **Native apps.** RPMs or files baked into `/usr`. No Flatpak if at all possible.
+- **Bake everything in.** If I use it, it belongs in the image, not installed on the running
+  system afterwards.
+- **Keep the structure as it is.** Small numbered scripts, one job each, easy to read and
+  extend. Don't consolidate, abstract or restructure them.
+
+## Where things go
+
+`build_files/build.sh` copies `system_files/` into the image root, then runs each script in order:
+
+| Script | Purpose |
+|---|---|
+| `01packages.sh` | Fedora repo: CLI tools, applications, and removal of defaults I don't use |
+| `02rpmfusion.sh` | RPM Fusion: codecs, AMD VA drivers, apps (Steam etc.) |
+| `03thirdparty.sh` | Apps from vendor repos (`.repo` files in `system_files/etc/yum.repos.d/`) |
+| `04missioncenter.sh` | Mission Center, extracted from its AppImage into `/usr/lib` |
+| `05mindustry.sh` | Mindustry jar from GitHub releases, run with system Java |
+| `06systemctl.sh` | Enable and disable services |
+| `07cleanup.sh` | Disable or remove repos, clean up so `bootc container lint` passes |
+
+`system_files/` mirrors the filesystem root. Config files go there at their real path.
+
+## Adding an app
+
+Use the first source that has it:
+
+1. Fedora repos: add to the applications list in `01packages.sh`
+2. RPM Fusion: `02rpmfusion.sh`
+3. Vendor RPM repo: add the `.repo` file, install in `03thirdparty.sh`, and disable the repo
+   in `07cleanup.sh`
+4. Upstream release: new numbered script that fetches the latest release at build time and
+   installs into `/usr/lib`, with a launcher in `/usr/bin` and a `.desktop` file. Follow
+   `04missioncenter.sh` or `05mindustry.sh`, renumber the later scripts, and add it to `build.sh`
+5. Flatpak: only as a last resort, and ask me first
+
+Crucible and FurMark stay as Flatpaks on purpose. Don't suggest baking them in.
+
+Fetch the latest release rather than pinning a version, so the daily build keeps apps current.
+
+## Rules that are easy to break
+
+- `systemctl disable` fails the build if the unit doesn't exist. Packages removed in
+  `01packages.sh` must not be disabled in `06systemctl.sh`. The commented-out lines and
+  REMINDERs there record which ones to restore if a removal block is ever deleted.
+- Repos used during the build are removed or disabled again in `07cleanup.sh`.
+- `/run` and `/var` leftovers must be cleaned in `07cleanup.sh` so the lint step stays clean.
+- `/tmp` is a tmpfs at build time, so it never reaches the image.
+- Bumping Fedora means updating `FEDORA_MAJOR_VERSION` in `Containerfile` and `IMAGE_DESC` in
+  `image-template.env`.
+
+## Build and release
+
+- Work happens on `apps-test`, then a PR into `main`.
+- GitHub Actions builds on PRs, but only publishes from `main` (on push, daily at 10:05 UTC,
+  or manually). The daily build is how packages and apps get updated.
+- Local build: `just build`. Check Justfile syntax: `just check`.
+- The Justfile's VM and disk image recipes are template leftovers: `disk_config/` was removed.
