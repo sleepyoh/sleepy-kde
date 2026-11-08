@@ -46,7 +46,11 @@ dnf5 install -y \
     vlc \
     kolourpaint \
     krita \
-    kdenlive
+    kdenlive \
+    plasma-oxygen \
+    oxygen-icon-theme \
+    oxygen-cursor-themes \
+    oxygen-sounds
 
 # Remove default packages I don't use
 dnf5 remove -y \
@@ -66,7 +70,8 @@ dnf5 remove -y \
     plasma-systemmonitor \
     plasma-discover \
     kjournald \
-    kjournald-libs
+    kjournald-libs \
+    kf6-baloo-file
 
 # Remove printing and scanning (no printer/scanner on this PC)
 # If you delete this block, uncomment "systemctl disable cups.service" in 06systemctl.sh
