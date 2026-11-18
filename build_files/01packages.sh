@@ -106,7 +106,7 @@ dnf5 remove -y \
 
 # Remove VM guest tools (this runs on bare metal, not inside a VM)
 # qemu-guest-agent stays on purpose.
-# If you delete this block, uncomment the VM guest lines in 05systemctl.sh
+# If you delete this block, uncomment the VM guest lines in 06systemctl.sh
 dnf5 remove -y \
     open-vm-tools \
     open-vm-tools-desktop \
