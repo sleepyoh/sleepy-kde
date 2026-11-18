@@ -36,7 +36,6 @@ dnf5 install -y \
     obs-studio-plugin-vkcapture-hook-libs.i686 \
     mangohud.x86_64 \
     mangohud.i686 \
-    bottles \
     gnome-boxes \
     gwenview \
     kcalc \
@@ -106,10 +105,13 @@ dnf5 remove -y \
     libsane-hpaio
 
 # Remove VM guest tools (this runs on bare metal, not inside a VM)
-# If you delete this block, uncomment the VM guest lines in 06systemctl.sh
+# qemu-guest-agent stays on purpose.
+# If you delete this block, uncomment the VM guest lines in 05systemctl.sh
 dnf5 remove -y \
     open-vm-tools \
-    virtualbox-guest-additions
+    open-vm-tools-desktop \
+    virtualbox-guest-additions \
+    hyperv-daemons
 
 # Remove Asian-language input methods (CJK fonts stay, so Asian text still displays)
 dnf5 remove -y \
