@@ -28,7 +28,8 @@ dnf5 install -y \
     cowsay \
     cmatrix \
     syncthing \
-    syncthingtray
+    syncthingtray \
+    gh
 
 # Install applications
 dnf5 install -y \
