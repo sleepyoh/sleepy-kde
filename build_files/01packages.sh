@@ -26,7 +26,9 @@ dnf5 install -y \
     fish \
     lolcat \
     cowsay \
-    cmatrix
+    cmatrix \
+    syncthing \
+    syncthingtray
 
 # Install applications
 dnf5 install -y \
@@ -49,7 +51,8 @@ dnf5 install -y \
     plasma-oxygen \
     oxygen-icon-theme \
     oxygen-cursor-themes \
-    oxygen-sounds
+    oxygen-sounds \
+    blender
 
 # Remove default packages I don't use
 dnf5 remove -y \
