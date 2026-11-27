@@ -1,0 +1,13 @@
+[Unit]
+Description=Build sleepy-kde and push to the local registry
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/sleepy-kde
+Environment=BUILDAH_LAYERS=false
+# Update the clone first, as a separate step, so the script is never replaced while it runs
+ExecStartPre=/usr/bin/git fetch https://github.com/sleepyoh/sleepy-kde.git main
+ExecStartPre=/usr/bin/git reset --hard FETCH_HEAD
+ExecStart=%h/sleepy-kde/server/local-build.sh
