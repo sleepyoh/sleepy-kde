@@ -33,7 +33,7 @@ Published as `ghcr.io/sleepyoh/sleepy-kde:latest`.
 
 `server/` is not part of the image. It holds the daily build on the home server VM
 (192.168.1.40): a systemd user timer at 13:30 that pulls `main`, runs `just build`, and pushes
-to `192.168.1.10:5000/plasma:YYYYMMDD` with `--tls-verify=false`.
+to `192.168.1.10:5000/plasma` as `:latest` and `:YYYYMMDD` with `--tls-verify=false`.
 
 ## Adding an app
 
