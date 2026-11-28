@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # Daily build on the home server VM (192.168.1.40), pushed to the TrueNAS registry.
-# Run by local-build.service, which updates the clone before this starts.
+# Run by build-plasma.service, which updates the clone before this starts.
 set -euo pipefail
 
 REGISTRY_IMAGE="192.168.1.10:5000/plasma"

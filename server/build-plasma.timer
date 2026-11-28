@@ -1,5 +1,5 @@
 [Unit]
-Description=Daily sleepy-kde build at 13:30
+Description=Daily sleepy-kde (plasma) build at 13:30
 
 [Timer]
 OnCalendar=*-*-* 13:30:00
