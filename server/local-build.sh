@@ -7,7 +7,8 @@ REGISTRY_IMAGE="192.168.1.10:5000/plasma"
 DATE_TAG="$REGISTRY_IMAGE:$(date +%Y%m%d)"
 LATEST_TAG="$REGISTRY_IMAGE:latest"
 
-just build # -> localhost/sleepy-kde:latest
+just build   # -> localhost/sleepy-kde:latest
+just rechunk # chunkah splits it into small layers, loaded back under the same name
 
 # The registry is plain HTTP and the VM has no registries.conf.d entry for it
 for TARGET in "$DATE_TAG" "$LATEST_TAG"; do
