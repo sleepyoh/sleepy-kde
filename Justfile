@@ -136,7 +136,7 @@ rechunk $target_image=image_name $tag=default_tag:
     # You may run into space issues on github runenrs as we are making a
     # complete copy of the image
     export CHUNKAH_CONFIG_STR=$(podman inspect "${target_image}")
-    podman run --rm --mount=type=image,src="${target_image}",target=/chunkah \
+    podman run --rm --log-driver=none --mount=type=image,src="${target_image}",target=/chunkah \
     -e CHUNKAH_CONFIG_STR quay.io/coreos/chunkah:latest \
     build \
     --verbose \
